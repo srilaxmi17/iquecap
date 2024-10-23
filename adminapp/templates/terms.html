@@ -1,0 +1,75 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+{% load static %}
+{% block nav %}
+
+<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title" style="margin-left: 10%;"> Form elements </h3>
+            
+        </div>
+        <div class="row" style="margin-left: 10%;">
+            <div class="col-10 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">ADD INVESTMENT TERM</h4>
+                        
+                        <form class="forms-sample" method="post" action="{% url 'adminapp:add_investment_term' %}"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="exampleInputName1">Title</label>
+                                <input type="text" class="form-control" id="exampleInputName1" placeholder="Title"
+                                    name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName1">Short Title</label>
+                                <input type="text" class="form-control" id="exampleInputName1" placeholder="Short Title"
+                                    name="short_title">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Description</label>
+                                <input type="text" class="form-control" id="exampleInputCity1" placeholder="Description"
+                                    name="description">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Minimum Investment</label>
+                                <input type="number" class="form-control" id="exampleInputCity1"
+                                    placeholder="Minimum Investment" name="minimum_investment">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Duration</label>
+                                <input type="text" class="form-control" id="exampleInputCity1" placeholder="Duration"
+                                    name="duration">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Returns</label>
+                                <input type="text" step="0.01" class="form-control" id="exampleInputCity1"
+                                    placeholder="Returns" name="returns">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Deliverables</label>
+                                <input type="text" step="0.01" class="form-control" id="exampleInputCity1"
+                                    placeholder="Deliverables" name="deliverables">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Video Link</label>
+                                <input type="url" class="form-control" id="exampleInputCity1" placeholder="video link"
+                                    name="video">
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            <button type="button" class="btn btn-light">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+    <!-- partial:../../partials/_footer.html -->
+
+    {% endblock %}

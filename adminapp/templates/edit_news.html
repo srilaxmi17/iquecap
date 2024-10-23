@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+{% load static %}
+{% block nav %}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title" style="margin-left: 10%;"> Form elements </h3>
+
+        </div>
+        <div class="row" style="margin-left: 10%;">
+            <div class="col-10 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">EDIT NEWS</h4>
+
+                        <form method="post" enctype="multipart/form-data" action="">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_title">Title:</label>
+                                <input type="text" id="id_title"  class="form-control" name="title" value="{{ news_article.title }}"
+                                    required><br>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="id_description">Description:</label>
+                                <textarea id="id_description"  class="form-control" name="description"
+                                    required>{{ news_article.description }}</textarea><br>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="id_image">Image:</label>
+                                <input type="file" id="id_image"  class="form-control" name="image"><br>
+                                {% if news_article.image %}
+                                <img src="{{ news_article.image.url }}" alt="{{ news_article.title }}"><br>
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Save Changes</button>
+
+                            <a href="{% url 'adminapp:news_list' %}"> <button type="submit"
+                                    class="btn btn-primary mr-2">Cancel</button> </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endblock %}

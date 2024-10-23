@@ -1,0 +1,161 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+{% load static %}
+{% block nav %}
+
+<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title" style="margin-left: 10%;"> Form Elements </h3>
+        </div>
+        <div class="row" style="margin-left: 10%;">
+            <div class="col-10 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">ADD COMPANY</h4>
+                        <form class="forms-sample" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% for i in edit_company %}
+                            <div class="form-group">
+                                <label for="exampleInputName1">Company Name</label>
+                                <input type="text" class="form-control" id="exampleInputName1" value="{{i.name}}"
+                                    name="name">
+                            </div>
+                            <div class="form-group">
+                                <label>Upload Logo</label>
+                                <input type="file" name="logo" class="file-upload-default" id="logo-upload"
+                                    style="display: none;"
+                                    onchange="document.getElementById('file-upload-info').value = this.files[0].name">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" id="file-upload-info"
+                                        disabled placeholder="Upload Image" value="{{ i.logo.url }}">
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-primary" type="button"
+                                            onclick="document.getElementById('logo-upload').click();">Upload</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Subscription Model</label>
+                                <input type="text" class="form-control" id="exampleInputCity1"
+                                    value="{{i.subscription_model}}" name="subscription_model">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Type</label>
+                                <input type="text" class="form-control" id="exampleInputCity1" value="{{i.type}}"
+                                    name="type">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Duration</label>
+                                <input type="text" class="form-control" id="exampleInputCity1" value="{{i.duration}}"
+                                    name="duration">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Percentage</label>
+                                <input type="number" step="0.01" class="form-control" id="exampleInputCity1"
+                                    value="{{i.percentage}}" name="percentage">
+                            </div>
+                            {% for i in edit_eqAP %}
+                            <div class="form-group" id="equityASection">
+                                <label for="exampleInputCity1">EquityAmount</label>
+                                <input type="number" class="form-control" id="exampleInputCity1"
+                                    value="{{i.e_amount}}" name="e_amount">
+                            </div>
+                            <div class="form-group" id="equityPSection">
+                                <label for="exampleInputCity1">EquityPercentage</label>
+                                <input type="number" class="form-control" id="exampleInputCity1"
+                                    value="{{i.e_percentage}}" name="e_percentage">
+                            </div>
+                            {% endfor %}
+                            <div class="form-group">
+                                <label for="exampleSelectInvestmentTerm">Investment Term</label>
+                                <select class="form-control" id="exampleSelectInvestmentTerm" name="investment_term">
+                                    <option selected disabled>Select Investment Term</option>
+                                    {% for term in investment_term %}
+                                        <option value="{{ term.id }}" 
+                                                {% if i.investment_term_id == term.id %}
+                                                    selected
+                                                {% else %}
+                                                    disabled
+                                                {% endif %}>
+                                            {{ term.title }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleTextarea1">Description</label>
+                                <textarea class="form-control" id="exampleTextarea1" rows="4"
+                                    name="description">{{ i.description }}</textarea>
+                            </div>
+                            <!-- <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button type="button" class="btn btn-light">Cancel</button> -->
+
+                            <!-- </div>
+                  </div>
+                </div> -->
+                            {% endfor %}
+
+                            <!-- <div class="col-md-12 grid-margin stretch-card" id="slotsForm" style="display: none;"> -->
+                            <!-- <div class="card"> -->
+                            <div class="card-body" id="slotsSection">
+                                <h4 class="card-title">Slots</h4>
+                                <p class="card-description" style="color: red;">
+                                    Slots can be added for companies under foco
+                                </p>
+                                {% for i in edit_slot %}
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label>Percentage</label>
+                                        <div id="the-basics">
+                                            <input class="typeahead" type="number"
+                                                name="slot_percentage_{{ forloop.counter }}" value="{{ i.percentage }}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label>Fixed Amount</label>
+                                        <div id="bloodhound">
+                                            <input class="typeahead" type="number"
+                                                name="slot_fixed_amount_{{ forloop.counter }}"
+                                                value="{{ i.fixed_amount }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% endfor %}
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                <a href="{% url 'adminapp:company_list' %}"> <button type="submit"
+                                        class="btn btn-primary mr-2">Cancel</button> </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- </div>
+          </div> -->
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <script>
+                function checkInvestmentTerm() {
+                    var investmentTerm = document.getElementById('exampleSelectInvestmentTerm').value;
+                    var slotsSection = document.getElementById('slotsSection');
+                    var equityASection = document.getElementById('equityASection');
+                    var equityPSection = document.getElementById('equityPSection');
+                    if (investmentTerm === '4') { // Assume '1' is the ID for 'foco'
+                        slotsSection.style.display = 'block';
+                        slotsSection.style.display = 'block';
+                    } else {
+                        slotsSection.style.display = 'none';
+                        slotsSection.style.display = 'none';
+                    }
+                    if (investmentTerm === '3') { // Assume '1' is the ID for 'foco'
+                        equityASection.style.display = 'block';
+                        equityPSection.style.display = 'block';
+                    } else {
+                        equityASection.style.display = 'none';
+                        equityPSection.style.display = 'none';
+                    }
+                }
+            </script>
+
+            {% endblock %}

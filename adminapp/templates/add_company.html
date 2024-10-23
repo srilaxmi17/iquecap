@@ -1,0 +1,196 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+{% load static %}
+{% block nav %}
+
+<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title" style="margin-left: 10%;"> Form Elements </h3>
+        </div>
+        <div class="row" style="margin-left: 10%;">
+            <div class="col-10 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">ADD COMPANY</h4>
+                        <form class="forms-sample" method="post" action="{% url 'adminapp:add_company' %}"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="exampleInputName1">Company Name</label>
+                                <input type="text" class="form-control" id="exampleInputName1"
+                                    placeholder="Company Name" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label>Logo</label>
+                                <input type="file" name="logo" class="file-upload-default" id="logo-upload"
+                                    style="display: none;"
+                                    onchange="document.getElementById('file-upload-info').value = this.files[0].name">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" id="file-upload-info"
+                                        disabled placeholder="Upload Image">
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-primary" type="button"
+                                            onclick="document.getElementById('logo-upload').click();">Upload</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Subscription Model</label>
+                                <input type="text" class="form-control" id="exampleInputCity1"
+                                    placeholder="Subscription Model" name="subscription_model">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Type</label>
+                                <input type="text" class="form-control" id="exampleInputCity1" placeholder="Type"
+                                    name="type">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Duration</label>
+                                <input type="text" class="form-control" id="exampleInputCity1" placeholder="Duration"
+                                    name="duration">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputCity1">Percentage</label>
+                                <input type="number" step="0.01" class="form-control" id="exampleInputCity1"
+                                    placeholder="Percentage" name="percentage">
+                            </div>
+                            <div class="form-group" id="equityASection">
+                                <label for="exampleInputCity1">EquityAmount</label>
+                                <input type="number" class="form-control" id="exampleInputCity1"
+                                    placeholder="Enter company amount in numbers" name="e_amount">
+                            </div>
+                            <div class="form-group" id="equityPSection">
+                                <label for="exampleInputCity1">EquityPercentage</label>
+                                <input type="number" class="form-control" id="exampleInputCity1"
+                                    placeholder="Enter company percentage in numbers" name="e_percentage">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelectInvestmentTerm">Investment Term</label>
+                                <select class="form-control" id="exampleSelectInvestmentTerm" name="investment_term"
+                                    onchange="checkInvestmentTerm()">
+                                    <option selected>Select Investment Term</option>
+                                    {% for term in investment_term %}
+                                    <option value="{{ term.id }}">{{ term.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleTextarea1">Description</label>
+                                <textarea class="form-control" id="exampleTextarea1" rows="4"
+                                    name="description"></textarea>
+                            </div>
+                            <!-- <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                      <button type="button" class="btn btn-light">Cancel</button> -->
+
+                            <!-- </div>
+                </div>
+              </div> -->
+
+
+                            <!-- <div class="col-md-12 grid-margin stretch-card" id="slotsForm" style="display: none;"> -->
+                            <!-- <div class="card"> -->
+                            <div class="card-body" id="slotsSection">
+                                <h4 class="card-title">Slots</h4>
+                                <p class="card-description" style="color: red;">
+                                    Slots can be added for companies under foco
+                                </p>
+
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label>Percentage</label>
+                                        <div id="the-basics">
+                                            <input class="typeahead" type="number" placeholder="percentage"
+                                                name="slot_percentage_1">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label>Fixed Amount</label>
+                                        <div id="bloodhound">
+                                            <input class="typeahead" type="number" placeholder="fixed_amount"
+                                                name="slot_fixed_amount_1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label>Percentage</label>
+                                        <div id="the-basics">
+                                            <input class="typeahead" type="number" placeholder="percentage"
+                                                name="slot_percentage_2">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label>Fixed Amount</label>
+                                        <div id="bloodhound">
+                                            <input class="typeahead" type="number" placeholder="fixed_amount"
+                                                name="slot_fixed_amount_2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label>Percentage</label>
+                                        <div id="the-basics">
+                                            <input class="typeahead" type="number" placeholder="percentage"
+                                                name="slot_percentage_3">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label>Fixed Amount</label>
+                                        <div id="bloodhound">
+                                            <input class="typeahead" type="number" placeholder="fixed_amount"
+                                                name="slot_fixed_amount_3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label>Percentage</label>
+                                        <div id="the-basics">
+                                            <input class="typeahead" type="number" placeholder="percentage"
+                                                name="slot_percentage_4">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label>Fixed Amount</label>
+                                        <div id="bloodhound">
+                                            <input class="typeahead" type="number" placeholder="fixed_amount"
+                                                name="slot_fixed_amount_4">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            <button type="button" class="btn btn-light">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- </div>
+          </div> -->
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <script>
+                function checkInvestmentTerm() {
+                    var investmentTerm = document.getElementById('exampleSelectInvestmentTerm').value;
+                    var slotsSection = document.getElementById('slotsSection');
+                    var equityASection = document.getElementById('equityASection');
+                    var equityPSection = document.getElementById('equityPSection');
+                    if (investmentTerm === '4') { // Assume '1' is the ID for 'foco'
+                        slotsSection.style.display = 'block';
+                    } else {
+                        slotsSection.style.display = 'none';
+                    }
+                    if (investmentTerm === '3') { // Assume '1' is the ID for 'foco'
+                        equityASection.style.display = 'block';
+                        equityPSection.style.display = 'block';
+                    } else {
+                        equityASection.style.display = 'none';
+                        equityPSection.style.display = 'none';
+                    }
+                }
+            </script>
+
+            {% endblock %}

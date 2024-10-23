@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Form Elements</title>
+</head>
+<body>
+    <h1>Basic Form Elements</h1>
+
+    <form class="forms-sample" method="post" action="{% url 'adminapp:add_company' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputName1">Company Name</label>
+            <input type="text" class="form-control" id="exampleInputName1" placeholder="Company Name" name="name">
+        </div>
+        <div class="form-group">
+            <label>Upload Logo</label>
+            <input type="file" name="logo" class="file-upload-default">
+            <div class="input-group col-xs-12">
+                <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                <span class="input-group-append">
+                    <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputCity1">Subscription Model</label>
+            <input type="text" class="form-control" id="exampleInputCity1" placeholder="Subscription Model" name="subscription_model">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputCity1">Type</label>
+            <input type="text" class="form-control" id="exampleInputCity1" placeholder="Type" name="type">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputCity1">Duration</label>
+            <input type="text" class="form-control" id="exampleInputCity1" placeholder="Duration" name="duration">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputCity1">Percentage</label>
+            <input type="number" step="0.01" class="form-control" id="exampleInputCity1" placeholder="Percentage" name="percentage">
+        </div>
+        <div class="form-group">
+            <label for="exampleSelectInvestmentTerm">Investment Term</label>
+            <select class="form-control" id="exampleSelectInvestmentTerm" name="investment_term">
+                <option selected>Select Investment Term</option>
+                {% for term in investment_term %}
+                    <option value="{{ term.id }}">{{ term.term_type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleTextarea1">Description</label>
+            <textarea class="form-control" id="exampleTextarea1" rows="4" name="description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        <button type="button" class="btn btn-light">Cancel</button>
+    </form>
+</body>
+</html>
